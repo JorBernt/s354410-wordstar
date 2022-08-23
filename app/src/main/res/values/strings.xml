@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wordstar</string>
+    <string name="delete_btn">Delete</string>
+    <string name="shuffle_btn">Refresh</string>
+    <string name="submit_btn">Submit</string>
+    <string name="hint_btn">Hint</string>
+</resources>
