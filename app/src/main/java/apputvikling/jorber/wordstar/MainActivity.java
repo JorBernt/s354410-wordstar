@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private char chosenChar;
     private static int points = 0;
 
-    TextView textInput, pointsView;
+    TextView textInput, pointsView, hintView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button shuffleBtn = findViewById(R.id.shuffleBtn);
         shuffleBtn.setText(R.string.shuffle_btn);
+        shuffleBtn.setOnClickListener(view -> handleShuffleButton());
 
         Button submitBtn = findViewById(R.id.submitBtn);
         submitBtn.setText(R.string.submit_btn);
@@ -87,12 +88,14 @@ public class MainActivity extends AppCompatActivity {
 
         Button hintButton = findViewById(R.id.hintBtn);
         hintButton.setText(R.string.hint_btn);
+        hintButton.setOnClickListener(view -> handleHintButton());
 
         textInput = findViewById(R.id.textInput);
         textInput.setTextSize(36);
-
         pointsView = findViewById(R.id.pointView);
-        pointsView.setText(Integer.toString(points));
+        pointsView.setText(String.format("Poeng: %s", points));
+        hintView = findViewById(R.id.hintView);
+
         ProgressBar pb = findViewById(R.id.scoreProgressBar);
 
         findViewById(R.id.deleteBtn).setOnClickListener(view -> handleDeleteButton());
@@ -117,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         System.out.println(chosenChar);
-        for(String s : matchingWords)
+        for (String s : matchingWords)
             System.out.println(s);
         int charIndex = 0;
         CharButton midButton = charButtonsMap.get(CharButtons.MID_MID.id);
@@ -139,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
             if (containsCharacters(s, characters) && s.contains(chosenCharacter + ""))
                 matchingWords.add(s);
         }
-
         return matchingWords;
     }
 
@@ -176,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updatePoints(int n) {
         points += n;
-        pointsView.setText(Integer.toString(points));
+        pointsView.setText(String.format("Poeng: %d", points));
     }
 
     private void showMessage(String s) {
@@ -187,16 +189,42 @@ public class MainActivity extends AppCompatActivity {
         textInput.setText("");
     }
 
+    private void handleShuffleButton() {
+        Collections.shuffle(chosenCharacters);
+        int index = 0;
+        for(CharButtons button : CharButtons.values()) {
+            if(button == CharButtons.MID_MID)
+                continue;
+            CharButton b = charButtonsMap.get(button.id);
+            b.letter = chosenCharacters.get(index++);
+            b.button.setText(Character.toString(b.letter));
+
+        }
+    }
+
+    private void handleHintButton() {
+        String hint = "";
+        int i = 0;
+        int randomIndex = new Random().nextInt(matchingWords.size());
+        for (String s : matchingWords) {
+            if (i++ == randomIndex) {
+                hint = s;
+                break;
+            }
+        }
+        int mid = hint.length() / 2;
+        hintView.setText(String.format("Hint: %s**%s", hint.substring(0, mid - 1), hint.substring(mid + 1)));
+    }
+
     private void handleDeleteButton() {
-        if(textInput.length() < 1)
+        if (textInput.length() < 1)
             return;
         String text = textInput.getText().toString();
         text = text.substring(0, text.length() - 1);
         textInput.setText("");
-        StringBuilder sb = new StringBuilder();
-        for(char c : text.toCharArray()) {
-            if(c == chosenChar) {
-                textInput.append(Html.fromHtml("<font color=#ff0000>"+ c +"</font>", Html.FROM_HTML_MODE_LEGACY));
+        for (char c : text.toCharArray()) {
+            if (c == chosenChar) {
+                textInput.append(Html.fromHtml("<font color=#ff0000>" + c + "</font>", Html.FROM_HTML_MODE_LEGACY));
                 continue;
             }
             textInput.append(Character.toString(c));
@@ -205,13 +233,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleCharacterButton(int id) {
-        if(textInput.getText().toString().length() >= 18)
+        if (textInput.getText().toString().length() >= 18)
             return;
         CharButton button = charButtonsMap.get(id);
-        if(button.chosen) {
-            textInput.append(Html.fromHtml("<font color=#ff0000>"+ button.letter +"</font>", Html.FROM_HTML_MODE_LEGACY));
-        }
-        else {
+        if (button.chosen) {
+            textInput.append(Html.fromHtml("<font color=#ff0000>" + button.letter + "</font>", Html.FROM_HTML_MODE_LEGACY));
+        } else {
             textInput.append(Character.toString(button.letter));
         }
     }
@@ -221,8 +248,7 @@ public class MainActivity extends AppCompatActivity {
         if (validWord(input)) {
             updatePoints(getWordPointValue(input));
             System.out.println("riktig!");
-        }
-        else {
+        } else {
             showMessage("Invalid word");
             System.out.println("feil");
         }
