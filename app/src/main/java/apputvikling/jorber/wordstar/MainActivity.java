@@ -27,10 +27,10 @@ import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
 
-    class CharButton {
+    static class CharButton {
         private int id;
         private char letter;
-        private Button button;
+        private final Button button;
         private boolean chosen;
 
         public CharButton(int id, Button button) {
@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private final List<String> words = new ArrayList<>();
-    private Set<String> matchingWords = new HashSet<>();
-    private List<Character> chosenCharacters = new ArrayList<>();
+    private Set<String> matchingWords;
+    List<Character> chosenCharacters;
     private final Map<Integer, CharButton> charButtonsMap = new HashMap<>();
     private char chosenChar;
     private static int points = 0;
