@@ -113,11 +113,12 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void initializeGame() {
-        GameManager.instance().initializeGame();
-        updatePoints(0);
+        GameManager gm = GameManager.instance();
+        gm.initializeGame();
+        updatePoints(gm.getPoints());
         int charIndex = 0;
         CharButton midButton = charButtonsMap.get(CharButtons.MID_MID.id);
-        Character chosenChar = GameManager.instance().getChosenCharacter();
+        Character chosenChar = gm.getChosenCharacter();
         midButton.setLetter(chosenChar);
         midButton.setChosen(true);
         midButton.getButton().setText(Character.toString(chosenChar));
@@ -125,8 +126,8 @@ public class GameActivity extends AppCompatActivity {
             if (button.equals(CharButtons.MID_MID))
                 continue;
             CharButton b = charButtonsMap.get(button.id);
-            b.setLetter(GameManager.instance().getChosenCharacters().get(charIndex));
-            b.getButton().setText(Character.toString(GameManager.instance().getChosenCharacters().get(charIndex++)));
+            b.setLetter(gm.getChosenCharacters().get(charIndex));
+            b.getButton().setText(Character.toString(gm.getChosenCharacters().get(charIndex++)));
         }
     }
 

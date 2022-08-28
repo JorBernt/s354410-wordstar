@@ -27,6 +27,7 @@ public class GameManager {
     private int points = 0;
     private int maxPoints = 0;
     private int foundWords = 0;
+    private boolean running = false;
 
     private GameManager() {
     }
@@ -36,6 +37,9 @@ public class GameManager {
     }
 
     public void initializeGame() {
+        if(running)
+            return;
+        running = true;
         while (true) {
             chosenCharacters = getCharacters();
             chosenChar = chosenCharacters.get(new Random().nextInt(7));
@@ -60,6 +64,8 @@ public class GameManager {
     }
 
     public void loadWordList(AssetManager am) {
+        if(!words.isEmpty())
+            return;
         try {
             Scanner in = new Scanner(new InputStreamReader(am.open("no-wordlist.txt"), StandardCharsets.UTF_8));
             while (in.hasNext()) {
@@ -212,5 +218,9 @@ public class GameManager {
     public int getScoreProgress() {
         System.out.println(points + " " + maxPoints);
         return (int) Math.ceil(((double) points / maxPoints) * 100);
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 }
