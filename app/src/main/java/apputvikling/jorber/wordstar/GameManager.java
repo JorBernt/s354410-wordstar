@@ -16,6 +16,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+
 public class GameManager {
 
     private static GameManager instance;
@@ -63,13 +64,13 @@ public class GameManager {
         }
     }
 
-    public void shuffleCharactersButtons(Map<Integer, MainActivity.CharButton> buttonMap) {
+    public void shuffleCharactersButtons(Map<Integer, CharButton> buttonMap) {
         Collections.shuffle(chosenCharacters);
         int index = 0;
         for (MainActivity.CharButtons button : MainActivity.CharButtons.values()) {
             if (button == MainActivity.CharButtons.MID_MID)
                 continue;
-            MainActivity.CharButton b = buttonMap.get(button.id);
+            CharButton b = buttonMap.get(button.id);
             b.setLetter(chosenCharacters.get(index++));
             b.getButton().setText(Character.toString(b.getLetter()));
         }

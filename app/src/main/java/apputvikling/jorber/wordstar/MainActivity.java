@@ -25,38 +25,6 @@ import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
 
-    static class CharButton {
-        private int id;
-        private char letter;
-        private final Button button;
-        private boolean chosen;
-
-        public CharButton(int id, Button button) {
-            this.id = id;
-            this.button = button;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public char getLetter() {
-            return letter;
-        }
-
-        public void setLetter(Character c) {
-            this.letter = c;
-        }
-
-        public Button getButton() {
-            return button;
-        }
-
-        public boolean isChosen() {
-            return chosen;
-        }
-    }
-
     enum CharButtons {
         TOP_LEFT(R.id.topLeftBtn),
         BOTTOM_LEFT(R.id.bottomLeftBtn),
@@ -74,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private final Map<Integer, MainActivity.CharButton> charButtonsMap = new HashMap<>();
+    private final Map<Integer, CharButton> charButtonsMap = new HashMap<>();
 
     TextView textInput, pointsView, hintView, popupTextView;
     RelativeLayout popUpView;
@@ -92,10 +60,10 @@ public class MainActivity extends AppCompatActivity {
                 if (textInput.getText().toString().length() >= 18)
                     return;
                 CharButton cbutton = charButtonsMap.get(view.getId());
-                if (cbutton.chosen) {
-                    textInput.append(Html.fromHtml("<font color=#ff0000>" + cbutton.letter + "</font>", Html.FROM_HTML_MODE_LEGACY));
+                if (cbutton.isChosen()) {
+                    textInput.append(Html.fromHtml("<font color=#ff0000>" + cbutton.getLetter() + "</font>", Html.FROM_HTML_MODE_LEGACY));
                 } else {
-                    textInput.append(Character.toString(cbutton.letter));
+                    textInput.append(Character.toString(cbutton.getLetter()));
                 }
             });
             charButtonsMap.put(button.id, new CharButton(button.id, b));
@@ -159,15 +127,15 @@ public class MainActivity extends AppCompatActivity {
         int charIndex = 0;
         CharButton midButton = charButtonsMap.get(CharButtons.MID_MID.id);
         Character chosenChar = GameManager.instance().getChosenCharacter();
-        midButton.letter = chosenChar;
-        midButton.chosen = true;
-        midButton.button.setText(Character.toString(chosenChar));
+        midButton.setLetter(chosenChar);
+        midButton.setChosen(true);
+        midButton.getButton().setText(Character.toString(chosenChar));
         for (CharButtons button : CharButtons.values()) {
             if (button.equals(CharButtons.MID_MID))
                 continue;
             CharButton b = charButtonsMap.get(button.id);
-            b.letter = GameManager.instance().getChosenCharacters().get(charIndex);
-            b.button.setText(Character.toString(GameManager.instance().getChosenCharacters().get(charIndex++)));
+            b.setLetter(GameManager.instance().getChosenCharacters().get(charIndex));
+            b.getButton().setText(Character.toString(GameManager.instance().getChosenCharacters().get(charIndex++)));
         }
     }
 
