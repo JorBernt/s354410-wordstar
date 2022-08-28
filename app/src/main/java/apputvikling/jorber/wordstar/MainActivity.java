@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             int points = GameManager.instance().submitAnswer(input);
             if (points > 0) {
                 showMessage(String.format("Correct word! Points: %s", points));
-                updatePoints(points);
+                updatePoints(GameManager.instance().getPoints());
             } else {
                 showMessage("Invalid word");
             }
@@ -138,8 +138,6 @@ public class MainActivity extends AppCompatActivity {
             b.getButton().setText(Character.toString(GameManager.instance().getChosenCharacters().get(charIndex++)));
         }
     }
-
-
 
     private void updatePoints(int n) {
         pointsView.setText(String.format("Poeng: %s", n));
