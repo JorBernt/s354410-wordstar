@@ -35,7 +35,7 @@ public class GameManager {
         return instance = instance == null ? new GameManager() : instance;
     }
 
-    public void initalizeGame() {
+    public void initializeGame() {
         while (true) {
             chosenCharacters = getCharacters();
             chosenChar = chosenCharacters.get(new Random().nextInt(7));

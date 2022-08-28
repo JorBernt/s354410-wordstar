@@ -9,19 +9,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -124,7 +113,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void initializeGame() {
-        GameManager.instance().initalizeGame();
+        GameManager.instance().initializeGame();
         updatePoints(0);
         int charIndex = 0;
         CharButton midButton = charButtonsMap.get(CharButtons.MID_MID.id);
