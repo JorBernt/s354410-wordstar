@@ -73,8 +73,8 @@ public class GameManager {
     public void shuffleCharactersButtons(Map<Integer, CharButton> buttonMap) {
         Collections.shuffle(chosenCharacters);
         int index = 0;
-        for (MainActivity.CharButtons button : MainActivity.CharButtons.values()) {
-            if (button == MainActivity.CharButtons.MID_MID)
+        for (GameActivity.CharButtons button : GameActivity.CharButtons.values()) {
+            if (button == GameActivity.CharButtons.MID_MID)
                 continue;
             CharButton b = buttonMap.get(button.id);
             b.setLetter(chosenCharacters.get(index++));
