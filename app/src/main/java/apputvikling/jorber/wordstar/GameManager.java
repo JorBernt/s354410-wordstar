@@ -24,9 +24,11 @@ public class GameManager {
     private Set<String> matchingWords;
     private List<Character> chosenCharacters;
     private char chosenChar;
-    private static int points = 0;
+    private int points = 0;
+    private int totalPoints = 0;
 
-    private GameManager() { }
+    private GameManager() {
+    }
 
     public static GameManager instance() {
         return instance = instance == null ? new GameManager() : instance;
@@ -44,6 +46,9 @@ public class GameManager {
         System.out.println(chosenChar);
         for (String s : matchingWords)
             System.out.println(s);
+        for (String s : matchingWords)
+            totalPoints += getWordPointValue(s);
+
     }
 
     private boolean containsCharacters(String s, List<Character> characters) {
@@ -139,7 +144,58 @@ public class GameManager {
         return points;
     }
 
+    public int getTotalWordAmount() {
+        return matchingWords.size();
+    }
+
     private int getWordPointValue(String word) {
-        return 10;
+        int p = 0;
+        for (char c : word.toCharArray()) {
+            switch (c) {
+                case 'A':
+                case 'D':
+                case 'E':
+                case 'I':
+                case 'L':
+                case 'N':
+                case 'R':
+                case 'S':
+                case 'T':
+                    p += 1;
+                    break;
+                case 'F':
+                case 'G':
+                case 'K':
+                case 'M':
+                case 'O':
+                    p += 2;
+                    break;
+                case 'H':
+                    p += 3;
+                    break;
+                case 'B':
+                case 'J':
+                case 'P':
+                case 'U':
+                case 'V':
+                case 'Å':
+                    p += 4;
+                    break;
+                case 'Ø':
+                    p += 5;
+                    break;
+                case 'Y':
+                case 'Æ':
+                    p += 6;
+                    break;
+                case 'W':
+                    p += 8;
+                    break;
+                default:
+                    p += 10;
+                    break;
+            }
+        }
+        return p;
     }
 }
