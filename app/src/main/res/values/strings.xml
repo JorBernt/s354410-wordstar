@@ -5,4 +5,8 @@
     <string name="shuffle_btn">Refresh</string>
     <string name="submit_btn">Submit</string>
     <string name="hint_btn">Hint</string>
+    <string-array name="languages">
+        <item>Norsk</item>
+        <item>English</item>
+    </string-array>
 </resources>
