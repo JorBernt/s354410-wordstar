@@ -25,7 +25,8 @@ public class GameManager {
     private List<Character> chosenCharacters;
     private char chosenChar;
     private int points = 0;
-    private int totalPoints = 0;
+    private int maxPoints = 0;
+    private int foundWords = 0;
 
     private GameManager() {
     }
@@ -47,7 +48,7 @@ public class GameManager {
         for (String s : matchingWords)
             System.out.println(s);
         for (String s : matchingWords)
-            totalPoints += getWordPointValue(s);
+            maxPoints += getWordPointValue(s);
 
     }
 
@@ -85,6 +86,7 @@ public class GameManager {
         if (validWord(input)) {
             int p = getWordPointValue(input);
             points += p;
+            foundWords++;
             return p;
         }
         return 0;
@@ -197,5 +199,18 @@ public class GameManager {
             }
         }
         return p;
+    }
+
+    public int getFoundWordAmount() {
+        return foundWords;
+    }
+
+    public int getMaxPoints() {
+        return maxPoints;
+    }
+
+    public int getScoreProgress() {
+        System.out.println(points + " " + maxPoints);
+        return (int) Math.ceil(((double) points / maxPoints) * 100);
     }
 }

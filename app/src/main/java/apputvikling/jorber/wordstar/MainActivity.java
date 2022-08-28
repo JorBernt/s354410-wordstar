@@ -44,8 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
     private final Map<Integer, CharButton> charButtonsMap = new HashMap<>();
 
-    TextView textInput, pointsView, hintView, popupTextView;
+    TextView textInput, pointsView, hintView, popupTextView, wordView;
     RelativeLayout popUpView;
+    ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,17 +114,19 @@ public class MainActivity extends AppCompatActivity {
 
         textInput = findViewById(R.id.textInput);
         textInput.setTextSize(36);
-        pointsView = findViewById(R.id.pointView);
-        pointsView.setText(String.format("Poeng: %s", GameManager.instance().getPoints()));
         hintView = findViewById(R.id.hintView);
+        pointsView = findViewById(R.id.pointView);
+        wordView = findViewById(R.id.wordView);
 
-        ProgressBar pb = findViewById(R.id.scoreProgressBar);
+        pb = findViewById(R.id.scoreProgressBar);
+        pb.setMax(100);
 
         initializeGame();
     }
 
     private void initializeGame() {
         GameManager.instance().initalizeGame();
+        updatePoints(0);
         int charIndex = 0;
         CharButton midButton = charButtonsMap.get(CharButtons.MID_MID.id);
         Character chosenChar = GameManager.instance().getChosenCharacter();
@@ -140,7 +143,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updatePoints(int n) {
-        pointsView.setText(String.format("Poeng: %s", n));
+        GameManager game = GameManager.instance();
+        pointsView.setText(String.format("Points: %s. Total points: %s", n, game.getMaxPoints()));
+        wordView.setText(String.format("Found words: %s. Total words: %s", game.getFoundWordAmount(), game.getTotalWordAmount()));
+        System.out.println(game.getScoreProgress());
+        pb.setProgress(game.getScoreProgress());
     }
 
     private void showMessage(String s) {
