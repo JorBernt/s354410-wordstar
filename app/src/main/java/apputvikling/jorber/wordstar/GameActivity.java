@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -85,12 +86,15 @@ public class GameActivity extends AppCompatActivity {
         Button submitBtn = findViewById(R.id.submitBtn);
         submitBtn.setText(R.string.submit_btn);
 
+        TextView foundWordsView = findViewById(R.id.foundWordsView);
+        foundWordsView.setMovementMethod(new ScrollingMovementMethod());
         submitBtn.setOnClickListener(view -> {
             String input = textInput.getText().toString();
             int points = GameManager.instance().submitAnswer(input);
             if (points > 0) {
                 showMessage(String.format("Correct word! Points: %s", points));
                 updatePoints(GameManager.instance().getPoints());
+                foundWordsView.setText(GameManager.instance().getFoundWords());
             } else {
                 showMessage("Invalid word");
             }
