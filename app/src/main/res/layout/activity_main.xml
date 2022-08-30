@@ -50,9 +50,23 @@
         <TextView
             android:id="@+id/textInput"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:textColor="@color/orange_200"
-            android:gravity="center" />
+            android:layout_height="31dp"
+            android:gravity="center"
+            android:textColor="@color/orange_200" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/foundWordsView"
+                android:layout_width="312dp"
+                android:layout_height="49dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -171,7 +185,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="85dp">
+            android:layout_height="59dp">
 
             <Button
                 android:id="@+id/hintBtn"
