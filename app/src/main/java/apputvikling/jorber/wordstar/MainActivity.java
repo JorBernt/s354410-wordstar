@@ -37,9 +37,7 @@ public class MainActivity extends AppCompatActivity {
         playButton.setVisibility(View.VISIBLE);
         languageMenu.setVisibility(View.VISIBLE);
         playButton.setOnClickListener(view -> {
-            if(languageMenu.getSelectedItem().equals("Norsk")) {
-                setLocale(this, "nb_NO");
-            }
+            setLocale(this, languageMenu.getSelectedItem().equals("Norsk") ? "nb" : "en");
             playButton.setVisibility(View.INVISIBLE);
             languageMenu.setVisibility(View.INVISIBLE);
             pb.setVisibility(View.VISIBLE);
@@ -59,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
     public static void setLocale(Activity activity, String languageCode) {
         Locale locale = new Locale(languageCode);
         Locale.setDefault(locale);
-        Resources resources = activity.getResources();
-        Configuration config = resources.getConfiguration();
-        config.setLocale(locale);
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
+        Configuration config = activity.getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        activity.getBaseContext().getResources().updateConfiguration(config,
+                activity.getBaseContext().getResources().getDisplayMetrics());
     }
 }
