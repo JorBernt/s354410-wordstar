@@ -25,6 +25,8 @@ public class GameManager {
     private int points = 0;
     private int maxPoints = 0;
     private List<String> foundWords = new ArrayList<>();
+    private StringBuilder foundWordBuilder = new StringBuilder();
+    private int currentLine = 0;
     private boolean running = false;
 
     private GameManager() {
@@ -91,6 +93,16 @@ public class GameManager {
             int p = getWordPointValue(input);
             points += p;
             foundWords.add(input);
+            if (currentLine + input.length() < 50) {
+                if(currentLine == 0)
+                    foundWordBuilder.append(input);
+                else
+                    foundWordBuilder.append(", ").append(input);
+            } else {
+                foundWordBuilder.append("\n").append(input);
+                currentLine = 0;
+            }
+            currentLine += input.length() + 2;
             return p;
         }
         return 0;
@@ -217,7 +229,7 @@ public class GameManager {
         return running;
     }
 
-    public List<String> getFoundWords() {
-        return foundWords;
+    public String getFoundWords() {
+        return foundWordBuilder.toString();
     }
 }
