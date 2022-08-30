@@ -37,7 +37,7 @@ public class GameManager {
     }
 
     public void initializeGame() {
-        if(running)
+        if (running)
             return;
         running = true;
         while (true) {
@@ -64,7 +64,7 @@ public class GameManager {
     }
 
     public void loadWordList(AssetManager am) {
-        if(!words.isEmpty())
+        if (!words.isEmpty())
             return;
         try {
             Scanner in = new Scanner(new InputStreamReader(am.open("no-wordlist.txt"), StandardCharsets.UTF_8));
@@ -147,7 +147,6 @@ public class GameManager {
     public String getHint() {
         int i = 0;
         int randomIndex = new Random().nextInt(matchingWords.size());
-
         String hint = matchingWords.get(randomIndex);
         int mid = hint.length() / 2;
         return String.format("Hint: %s**%s", hint.substring(0, mid - 1), hint.substring(mid + 1));
