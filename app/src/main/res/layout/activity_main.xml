@@ -5,6 +5,7 @@
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dark_gray"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -17,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:gravity="center"
+            android:textColor="@color/orange_200"
             android:text="TextView" />
 
         <LinearLayout
@@ -27,6 +29,7 @@
             <TextView
                 android:id="@+id/pointView"
                 android:layout_width="match_parent"
+                android:textColor="@color/orange_200"
                 android:layout_height="wrap_content" />
 
             <ProgressBar
@@ -39,6 +42,7 @@
                 android:id="@+id/wordView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/orange_200"
                 android:text="TextView" />
 
         </LinearLayout>
@@ -47,6 +51,7 @@
             android:id="@+id/textInput"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:textColor="@color/orange_200"
             android:gravity="center" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -148,6 +153,7 @@
                     android:layout_marginBottom="132dp"
                     android:insetTop="2dp"
                     android:insetBottom="2dp"
+                    android:textColor="@color/orange_200"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.496"

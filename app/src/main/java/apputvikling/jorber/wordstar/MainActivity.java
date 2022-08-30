@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
 
         Spinner languageMenu = findViewById(R.id.languageSpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.languages, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.languages, R.layout.spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_item);
         languageMenu.setAdapter(adapter);
 
         Button playButton = findViewById(R.id.playButton);

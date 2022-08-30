@@ -1,6 +1,7 @@
 package apputvikling.jorber.wordstar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
 import android.text.Html;
@@ -42,7 +43,8 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
-
+        String redColor = String.format("#%06x", ContextCompat.getColor(this, R.color.red_200) & 0xffffff);
+        System.out.println(redColor);
         for (CharButtons button : CharButtons.values()) {
             Button b = findViewById(button.id);
             b.setOnClickListener(view -> {
@@ -50,7 +52,7 @@ public class GameActivity extends AppCompatActivity {
                     return;
                 CharButton cbutton = charButtonsMap.get(view.getId());
                 if (cbutton.isChosen()) {
-                    textInput.append(Html.fromHtml("<font color=#ff0000>" + cbutton.getLetter() + "</font>", Html.FROM_HTML_MODE_LEGACY));
+                    textInput.append(Html.fromHtml("<font color=" + redColor + ">" + cbutton.getLetter() + "</font>", Html.FROM_HTML_MODE_LEGACY));
                 } else {
                     textInput.append(Character.toString(cbutton.getLetter()));
                 }
@@ -60,7 +62,6 @@ public class GameActivity extends AppCompatActivity {
 
         Button deleteBtn = findViewById(R.id.deleteBtn);
         deleteBtn.setText(R.string.delete_btn);
-
         deleteBtn.setOnClickListener(view -> {
             if (textInput.length() < 1)
                 return;
@@ -69,7 +70,7 @@ public class GameActivity extends AppCompatActivity {
             textInput.setText("");
             for (char c : text.toCharArray()) {
                 if (c == GameManager.instance().getChosenCharacter()) {
-                    textInput.append(Html.fromHtml("<font color=#ff0000>" + c + "</font>", Html.FROM_HTML_MODE_LEGACY));
+                    textInput.append(Html.fromHtml("<font color=" + redColor + ">" + c + "</font>", Html.FROM_HTML_MODE_LEGACY));
                     continue;
                 }
                 textInput.append(Character.toString(c));
