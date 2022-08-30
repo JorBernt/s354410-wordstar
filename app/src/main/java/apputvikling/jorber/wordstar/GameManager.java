@@ -8,12 +8,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -21,7 +19,7 @@ public class GameManager {
 
     private static GameManager instance;
     private final List<String> words = new ArrayList<>();
-    private Set<String> matchingWords;
+    private List<String> matchingWords;
     private List<Character> chosenCharacters;
     private char chosenChar;
     private int points = 0;
@@ -105,8 +103,8 @@ public class GameManager {
         return false;
     }
 
-    private Set<String> getWords(List<Character> characters, Character chosenCharacter) {
-        Set<String> matchingWords = new HashSet<>();
+    private List<String> getWords(List<Character> characters, Character chosenCharacter) {
+        List<String> matchingWords = new ArrayList<>();
         for (String s : words) {
             if (containsCharacters(s, characters) && s.contains(chosenCharacter + ""))
                 matchingWords.add(s);
@@ -135,15 +133,10 @@ public class GameManager {
     }
 
     public String getHint() {
-        String hint = "";
         int i = 0;
         int randomIndex = new Random().nextInt(matchingWords.size());
-        for (String s : matchingWords) {
-            if (i++ == randomIndex) {
-                hint = s;
-                break;
-            }
-        }
+
+        String hint = matchingWords.get(randomIndex);
         int mid = hint.length() / 2;
         return String.format("Hint: %s**%s", hint.substring(0, mid - 1), hint.substring(mid + 1));
     }
