@@ -109,9 +109,11 @@ public class GameManager {
     }
 
     private boolean validWord(String word) {
-        for (String s : words)
-            if (word.equals(s))
+        for (String s : matchingWords)
+            if (word.equals(s)) {
+                matchingWords.remove(s);
                 return true;
+            }
         return false;
     }
 
