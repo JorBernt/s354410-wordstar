@@ -24,7 +24,7 @@ public class GameManager {
     private char chosenChar;
     private int points = 0;
     private int maxPoints = 0;
-    private int foundWords = 0;
+    private List<String> foundWords = new ArrayList<>();
     private boolean running = false;
 
     private GameManager() {
@@ -90,7 +90,7 @@ public class GameManager {
         if (validWord(input)) {
             int p = getWordPointValue(input);
             points += p;
-            foundWords++;
+            foundWords.add(input);
             return p;
         }
         return 0;
@@ -201,7 +201,7 @@ public class GameManager {
     }
 
     public int getFoundWordAmount() {
-        return foundWords;
+        return foundWords.size();
     }
 
     public int getMaxPoints() {
@@ -215,5 +215,9 @@ public class GameManager {
 
     public boolean isRunning() {
         return running;
+    }
+
+    public List<String> getFoundWords() {
+        return foundWords;
     }
 }
