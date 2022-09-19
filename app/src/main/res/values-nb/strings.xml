@@ -5,4 +5,14 @@
     <string name="shuffle_btn">Stokk</string>
     <string name="submit_btn">Sjekk</string>
     <string name="hint_btn">Hint</string>
+    <string name="correct_respons">Riktig! %o poeng!</string>
+    <string name="wrong_respons">Feil! Prøv igjen!</string>
+    <string name="already_found_respons">Allerede gjettet det!</string>
+    <string name="point_view_text">Poeng: %o. Poeng totalt: %o</string>
+    <string name="foundword_view_text">Funnet ord: %o. Ord totalt: %o</string>
+    <string name="play_btn">Spill</string>
+    <string name="continue_btn">Fortsett</string>
+    <string name="solution">Fasit</string>
+    <string name="english">English</string>
+    <string name="norwegian">Norsk</string>
 </resources>

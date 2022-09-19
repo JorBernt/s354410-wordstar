@@ -14,7 +14,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="190dp" />
+            android:layout_height="31dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -65,19 +65,40 @@
             android:orientation="horizontal">
 
             <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
                 android:layout_weight="1" />
 
-            <Spinner
-                android:id="@+id/languageSpinner"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                />
+            <Button
+                android:id="@+id/noLangButton"
+                style="?attr/materialButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/blue_200"
+
+                android:textColor="@color/blue_700"
+                android:textColorHighlight="@color/white" />
 
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/enLangButton"
+                style="?attr/materialButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/blue_200"
+
+                android:textColor="@color/blue_700"
+                android:textColorHighlight="@color/white" />
+
+            <Space
+                android:layout_width="150dp"
+                android:layout_height="40dp"
                 android:layout_weight="1" />
         </LinearLayout>
 
