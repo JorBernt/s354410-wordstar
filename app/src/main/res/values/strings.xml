@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Wordstar</string>
     <string name="delete_btn">Delete</string>
-    <string name="shuffle_btn">Refresh</string>
+    <string name="shuffle_btn">Shuffle</string>
     <string name="submit_btn">Submit</string>
     <string name="hint_btn">Hint</string>
     <string-array name="languages">

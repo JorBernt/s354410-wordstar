@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Ordstjerne</string>
     <string name="delete_btn">Slett</string>
-    <string name="shuffle_btn">Oppdater</string>
+    <string name="shuffle_btn">Stokk</string>
     <string name="submit_btn">Sjekk</string>
     <string name="hint_btn">Hint</string>
 </resources>
