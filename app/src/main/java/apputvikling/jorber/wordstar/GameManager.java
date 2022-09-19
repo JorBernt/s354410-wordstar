@@ -25,8 +25,6 @@ public class GameManager {
     private int points = 0;
     private int maxPoints = 0;
     private List<String> foundWords = new ArrayList<>();
-    private StringBuilder foundWordBuilder = new StringBuilder();
-    private int currentLine = 0;
     private boolean running = false;
 
     private GameManager() {
@@ -49,6 +47,8 @@ public class GameManager {
                 break;
         }
         System.out.println(chosenChar);
+        for (String s : matchingWords)
+            foundWords.add(s);
         for (String s : matchingWords)
             System.out.println(s);
         for (String s : matchingWords)
@@ -93,19 +93,28 @@ public class GameManager {
             int p = getWordPointValue(input);
             points += p;
             foundWords.add(input);
-            if (currentLine + input.length() < 50) {
-                if(currentLine == 0)
-                    foundWordBuilder.append(input);
-                else
-                    foundWordBuilder.append(", ").append(input);
-            } else {
-                foundWordBuilder.append("\n").append(input);
-                currentLine = 0;
-            }
-            currentLine += input.length() + 2;
             return p;
         }
         return 0;
+    }
+
+    private String formatFoundWordView(boolean portrait) {
+        StringBuilder stringBuilder = new StringBuilder();
+        int lineBreak = portrait ? 50 : 25;
+        int currentLine = 0;
+        for (String s : foundWords) {
+            if (currentLine + s.length() < lineBreak) {
+                if (currentLine == 0)
+                    stringBuilder.append(s);
+                else
+                    stringBuilder.append(", ").append(s);
+            } else {
+                stringBuilder.append("\n").append(s);
+                currentLine = 0;
+            }
+            currentLine += s.length() + 2;
+        }
+        return stringBuilder.toString();
     }
 
     private boolean validWord(String word) {
@@ -230,7 +239,7 @@ public class GameManager {
         return running;
     }
 
-    public String getFoundWords() {
-        return foundWordBuilder.toString();
+    public String getFoundWords(boolean portrait) {
+        return formatFoundWordView(portrait);
     }
 }

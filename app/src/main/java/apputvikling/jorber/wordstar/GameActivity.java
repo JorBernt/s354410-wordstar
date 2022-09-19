@@ -1,8 +1,10 @@
 package apputvikling.jorber.wordstar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
@@ -92,7 +94,7 @@ public class GameActivity extends AppCompatActivity {
             if (points > 0) {
                 showMessage(String.format("Correct word! Points: %s", points));
                 updatePoints(GameManager.instance().getPoints());
-                foundWordsView.setText(GameManager.instance().getFoundWords());
+                foundWordsView.setText(GameManager.instance().getFoundWords(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT));
             } else {
                 showMessage("Invalid word");
             }
@@ -113,6 +115,21 @@ public class GameActivity extends AppCompatActivity {
         pb.setMax(100);
 
         initializeGame();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outstate) {
+        super.onSaveInstanceState(outstate);
+        outstate.putString("textInput", textInput.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        drawText(savedInstanceState.getString("textInput"));
+        TextView foundWordsView = findViewById(R.id.foundWordsView);
+        foundWordsView.setText(GameManager.instance().getFoundWords(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT));
+
     }
 
     private void initializeGame() {
