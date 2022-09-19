@@ -11,8 +11,11 @@ import android.text.method.ScrollingMovementMethod;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GameActivity extends AppCompatActivity {
@@ -78,23 +81,36 @@ public class GameActivity extends AppCompatActivity {
 
         Button shuffleBtn = findViewById(R.id.shuffleBtn);
         shuffleBtn.setText(R.string.shuffle_btn);
-
-        shuffleBtn.setOnClickListener(view -> GameManager.instance().shuffleCharactersButtons(charButtonsMap));
-
-        Button submitBtn = findViewById(R.id.submitBtn);
-        submitBtn.setText(R.string.submit_btn);
+        shuffleBtn.setOnClickListener(view -> {
+            List<Character> chosenCharacters = GameManager.instance().shuffleCharacters();
+            int index = 0;
+            for (GameActivity.CharButtons button : GameActivity.CharButtons.values()) {
+                if (button == GameActivity.CharButtons.MID_MID)
+                    continue;
+                CharButton b = charButtonsMap.get(button.id);
+                b.setLetter(chosenCharacters.get(index++));
+                b.getButton().setText(Character.toString(b.getLetter()));
+            }
+        });
 
         TextView foundWordsView = findViewById(R.id.foundWordsView);
         foundWordsView.setMovementMethod(new ScrollingMovementMethod());
+
+        Button submitBtn = findViewById(R.id.submitBtn);
+        submitBtn.setText(R.string.submit_btn);
         submitBtn.setOnClickListener(view -> {
             String input = textInput.getText().toString();
             int points = GameManager.instance().submitAnswer(input);
             if (points > 0) {
-                showMessage(String.format("Correct word! Points: %s", points));
+                showMessage(String.format(getString(R.string.correct_respons), points));
                 updatePoints(GameManager.instance().getPoints());
-                foundWordsView.setText(GameManager.instance().getFoundWords(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT));
-            } else {
-                showMessage("Invalid word");
+                foundWordsView.setText(GameManager.instance().getFoundWords());
+            }
+            else if(points == -1) {
+                showMessage(getString(R.string.already_found_respons));
+            }
+            else {
+                showMessage(getString(R.string.wrong_respons));
             }
             reset();
         });
@@ -136,8 +152,7 @@ public class GameActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         drawText(savedInstanceState.getString("textInput"));
         TextView foundWordsView = findViewById(R.id.foundWordsView);
-        foundWordsView.setText(GameManager.instance().getFoundWords(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT));
-
+        foundWordsView.setText(GameManager.instance().getFoundWords());
     }
 
     private void initializeGame() {
@@ -158,6 +173,8 @@ public class GameActivity extends AppCompatActivity {
             b.setLetter(gm.getChosenCharacters().get(charIndex));
             b.getButton().setText(Character.toString(gm.getChosenCharacters().get(charIndex++)));
         }
+        TextView foundWordsView = findViewById(R.id.foundWordsView);
+        foundWordsView.setText(GameManager.instance().getFoundWords());
     }
 
     private void drawText(char c) {
@@ -172,14 +189,13 @@ public class GameActivity extends AppCompatActivity {
 
     private void updatePoints(int n) {
         GameManager game = GameManager.instance();
-        pointsView.setText(String.format("Points: %s. Total points: %s", n, game.getMaxPoints()));
-        wordView.setText(String.format("Found words: %s. Total words: %s", game.getFoundWordAmount(), game.getTotalWordAmount()));
-        System.out.println(game.getScoreProgress());
+        pointsView.setText(String.format(getString(R.string.point_view_text), n, game.getMaxPoints()));
+        wordView.setText(String.format(getString(R.string.foundword_view_text), game.getFoundWordAmount(), game.getTotalWordAmount()));
         pb.setProgress(game.getScoreProgress());
     }
 
     private void showMessage(String s) {
-
+        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
     }
 
     private void reset() {

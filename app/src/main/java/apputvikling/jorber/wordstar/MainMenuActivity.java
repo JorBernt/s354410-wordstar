@@ -7,10 +7,8 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 
 import java.util.Locale;
 
@@ -23,22 +21,32 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main_menu);
-
-        Spinner languageMenu = findViewById(R.id.languageSpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.languages, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_item);
-        languageMenu.setAdapter(adapter);
-
-        Button playButton = findViewById(R.id.playButton);
-        playButton.setText(GameManager.instance().isRunning() ? "Continue" : "Play");
         ProgressBar pb = findViewById(R.id.loadingBar);
         pb.setVisibility(View.INVISIBLE);
+
+        Button playButton = findViewById(R.id.playButton);
+
+        Button noLangButton = findViewById(R.id.noLangButton);
+        noLangButton.setText(R.string.norwegian);
+
+        noLangButton.setOnClickListener(view -> {
+            setLocale(this, "nb");
+            playButton.setText(GameManager.instance().isRunning() ? getString(R.string.continue_btn) : getString(R.string.play_btn));
+        });
+
+        Button enLangButton = findViewById(R.id.enLangButton);
+        enLangButton.setOnClickListener(view -> {
+            setLocale(this, "en");
+            playButton.setText(GameManager.instance().isRunning() ? getString(R.string.continue_btn) : getString(R.string.play_btn));
+        });
+        enLangButton.setText(R.string.english);
+
+        playButton.setText(GameManager.instance().isRunning() ? getString(R.string.continue_btn) : getString(R.string.play_btn));
         playButton.setVisibility(View.VISIBLE);
-        languageMenu.setVisibility(View.VISIBLE);
         playButton.setOnClickListener(view -> {
-            setLocale(this, languageMenu.getSelectedItem().equals("Norsk") ? "nb" : "en");
             playButton.setVisibility(View.INVISIBLE);
-            languageMenu.setVisibility(View.INVISIBLE);
+            noLangButton.setVisibility(View.INVISIBLE);
+            enLangButton.setVisibility(View.INVISIBLE);
             pb.setVisibility(View.VISIBLE);
             GameManager.instance().loadWordList(getAssets());
             Intent intent = new Intent(this, GameActivity.class);

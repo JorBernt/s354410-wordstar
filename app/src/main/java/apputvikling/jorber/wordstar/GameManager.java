@@ -1,6 +1,7 @@
 package apputvikling.jorber.wordstar;
 
 import android.content.res.AssetManager;
+import android.os.Bundle;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,6 +21,7 @@ public class GameManager {
     private static GameManager instance;
     private final List<String> words = new ArrayList<>();
     private List<String> matchingWords;
+    private ArrayList<String> solution;
     private List<Character> chosenCharacters;
     private char chosenChar;
     private int points = 0;
@@ -47,14 +49,9 @@ public class GameManager {
             if (matchingWords.size() >= 15)
                 break;
         }
-        System.out.println(chosenChar);
-        for (String s : matchingWords)
-            foundWords.add(s);
-        for (String s : matchingWords)
-            System.out.println(s);
+        solution = new ArrayList<>(matchingWords);
         for (String s : matchingWords)
             maxPoints += getWordPointValue(s);
-
     }
 
     private boolean containsCharacters(String s, List<Character> characters) {
@@ -77,19 +74,9 @@ public class GameManager {
         }
     }
 
-    public void shuffleCharactersButtons(Map<Integer, CharButton> buttonMap) {
-        Collections.shuffle(chosenCharacters);
-        int index = 0;
-        for (GameActivity.CharButtons button : GameActivity.CharButtons.values()) {
-            if (button == GameActivity.CharButtons.MID_MID)
-                continue;
-            CharButton b = buttonMap.get(button.id);
-            b.setLetter(chosenCharacters.get(index++));
-            b.getButton().setText(Character.toString(b.getLetter()));
-        }
-    }
-
     public int submitAnswer(String input) {
+        if (foundWords.contains(input))
+            return -1;
         if (validWord(input)) {
             int p = getWordPointValue(input);
             points += p;
