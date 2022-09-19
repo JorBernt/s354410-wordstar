@@ -1,6 +1,7 @@
 package apputvikling.jorber.wordstar;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -103,6 +104,16 @@ public class GameActivity extends AppCompatActivity {
         Button hintButton = findViewById(R.id.hintBtn);
         hintButton.setText(R.string.hint_btn);
         hintButton.setOnClickListener(view -> hintView.setText(GameManager.instance().getHint()));
+
+        Button fasitButton = findViewById(R.id.fasitBtn);
+        fasitButton.setText("?");
+        fasitButton.setOnClickListener(view -> {
+            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            alertDialog.setTitle(getString(R.string.solution));
+            alertDialog.setMessage(GameManager.instance().getSolution());
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", (dialogInterface, i) -> { });
+            alertDialog.show();
+        });
 
         textInput = findViewById(R.id.textInput);
         textInput.setTextSize(36);
