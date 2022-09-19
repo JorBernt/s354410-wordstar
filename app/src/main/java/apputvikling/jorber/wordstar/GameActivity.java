@@ -5,13 +5,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -27,15 +25,12 @@ public class GameActivity extends AppCompatActivity {
         BOTTOM_MID(R.id.bottomMidBtn),
         TOP_RIGHT(R.id.topRightBtn),
         BOTTOM_RIGHT(R.id.bottomRightBtn);
-
         final int id;
 
         CharButtons(int id) {
             this.id = id;
         }
     }
-
-
     private final Map<Integer, CharButton> charButtonsMap = new HashMap<>();
 
     TextView textInput, pointsView, hintView, wordView;
@@ -46,6 +41,8 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
+
+        //Initializes and sets up the word star buttons.
         for (CharButtons button : CharButtons.values()) {
             Button b = findViewById(button.id);
             b.setTextSize(36);
@@ -147,6 +144,7 @@ public class GameActivity extends AppCompatActivity {
         GameManager gm = GameManager.instance();
         gm.initializeGame();
         updatePoints(gm.getPoints());
+
         int charIndex = 0;
         CharButton midButton = charButtonsMap.get(CharButtons.MID_MID.id);
         Character chosenChar = gm.getChosenCharacter();

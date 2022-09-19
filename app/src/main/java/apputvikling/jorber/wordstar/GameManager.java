@@ -38,6 +38,7 @@ public class GameManager {
         if (running)
             return;
         running = true;
+        //Choosing the letters and finding the solution.
         while (true) {
             chosenCharacters = getCharacters();
             chosenChar = chosenCharacters.get(new Random().nextInt(7));
@@ -96,25 +97,6 @@ public class GameManager {
             return p;
         }
         return 0;
-    }
-
-    private String formatFoundWordView(boolean portrait) {
-        StringBuilder stringBuilder = new StringBuilder();
-        int lineBreak = portrait ? 50 : 25;
-        int currentLine = 0;
-        for (String s : foundWords) {
-            if (currentLine + s.length() < lineBreak) {
-                if (currentLine == 0)
-                    stringBuilder.append(s);
-                else
-                    stringBuilder.append(", ").append(s);
-            } else {
-                stringBuilder.append("\n").append(s);
-                currentLine = 0;
-            }
-            currentLine += s.length() + 2;
-        }
-        return stringBuilder.toString();
     }
 
     private boolean validWord(String word) {
@@ -231,7 +213,6 @@ public class GameManager {
     }
 
     public int getScoreProgress() {
-        System.out.println(points + " " + maxPoints);
         return (int) Math.ceil(((double) points / maxPoints) * 100);
     }
 
@@ -239,7 +220,17 @@ public class GameManager {
         return running;
     }
 
-    public String getFoundWords(boolean portrait) {
-        return formatFoundWordView(portrait);
+    public String getFoundWords() {
+        return String.join(", ", foundWords);
+    }
+
+    public CharSequence getSolution() {
+        return String.join(", ", solution);
+    }
+
+    public List<Character> shuffleCharacters() {
+        Collections.shuffle(chosenCharacters);
+        return chosenCharacters;
     }
 }
+

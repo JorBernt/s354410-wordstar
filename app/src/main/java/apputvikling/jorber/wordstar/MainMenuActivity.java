@@ -53,6 +53,10 @@ public class MainMenuActivity extends AppCompatActivity {
         startActivity(getIntent());
     }
 
+    // Sets the language of the phone. This function is using some deprecated functions that should be
+    // updated.
+
+    //https://stackoverflow.com/questions/56888310/how-to-use-sharedpreferences-to-change-language
     public static void setLocale(Activity activity, String languageCode) {
         Locale locale = new Locale(languageCode);
         Locale.setDefault(locale);
