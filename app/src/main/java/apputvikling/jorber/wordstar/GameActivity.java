@@ -48,6 +48,7 @@ public class GameActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         for (CharButtons button : CharButtons.values()) {
             Button b = findViewById(button.id);
+            b.setTextSize(36);
             b.setOnClickListener(view -> {
                 if (textInput.getText().toString().length() >= 18)
                     return;
