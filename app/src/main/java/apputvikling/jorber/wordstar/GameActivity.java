@@ -44,8 +44,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
-        String redColor = String.format("#%06x", ContextCompat.getColor(this, R.color.red_200) & 0xffffff);
-        System.out.println(redColor);
         for (CharButtons button : CharButtons.values()) {
             Button b = findViewById(button.id);
             b.setOnClickListener(view -> {
@@ -53,7 +51,7 @@ public class GameActivity extends AppCompatActivity {
                     return;
                 CharButton cbutton = charButtonsMap.get(view.getId());
                 if (cbutton.isChosen()) {
-                    textInput.append(Html.fromHtml("<font color=" + redColor + ">" + cbutton.getLetter() + "</font>", Html.FROM_HTML_MODE_LEGACY));
+                    drawText(cbutton.getLetter());
                 } else {
                     textInput.append(Character.toString(cbutton.getLetter()));
                 }
@@ -71,7 +69,7 @@ public class GameActivity extends AppCompatActivity {
             textInput.setText("");
             for (char c : text.toCharArray()) {
                 if (c == GameManager.instance().getChosenCharacter()) {
-                    textInput.append(Html.fromHtml("<font color=" + redColor + ">" + c + "</font>", Html.FROM_HTML_MODE_LEGACY));
+                    drawText(c);
                     continue;
                 }
                 textInput.append(Character.toString(c));
@@ -134,6 +132,16 @@ public class GameActivity extends AppCompatActivity {
             b.setLetter(gm.getChosenCharacters().get(charIndex));
             b.getButton().setText(Character.toString(gm.getChosenCharacters().get(charIndex++)));
         }
+    }
+
+    private void drawText(char c) {
+        String redColor = String.format("#%06x", ContextCompat.getColor(this, R.color.red_200) & 0xffffff);
+        textInput.append(Html.fromHtml("<font color=" + redColor + ">" + c + "</font>", Html.FROM_HTML_MODE_LEGACY));
+    }
+
+    private void drawText(String s) {
+        for(char c : s.toCharArray())
+            drawText(c);
     }
 
     private void updatePoints(int n) {
