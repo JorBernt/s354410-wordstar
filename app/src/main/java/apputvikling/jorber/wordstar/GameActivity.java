@@ -37,8 +37,7 @@ public class GameActivity extends AppCompatActivity {
 
     private final Map<Integer, CharButton> charButtonsMap = new HashMap<>();
 
-    TextView textInput, pointsView, hintView, popupTextView, wordView;
-    RelativeLayout popUpView;
+    TextView textInput, pointsView, hintView, wordView;
     ProgressBar pb;
 
     @Override
